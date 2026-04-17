@@ -20,6 +20,9 @@ const isAllowedOrigin = (origin) => {
     if (origin === 'https://medical365.in') return true;
     if (origin === 'https://www.medical365.in') return true;
     if (origin.endsWith('.medical365.in')) return true;
+    if (origin === 'https://eventsupply.in') return true;
+    if (origin === 'https://www.eventsupply.in') return true;
+    if (origin.endsWith('.eventsupply.in')) return true;
     return false;
 };
 

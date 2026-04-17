@@ -308,24 +308,6 @@ const Admin = () => {
                                 </div>
                             </div>
                             
-                            {hospital && hospital.departments && hospital.departments.length > 0 && (
-                                <div className="form-row" style={{ marginTop: '10px' }}>
-                                    <div className="form-group" style={{ gridColumn: '1 / -1' }}>
-                                        <label className="staff-label">Assign Department (Optional - Leave blank to allow all)</label>
-                                        <select
-                                            value={createForm.department}
-                                            onChange={(e) => setCreateForm(prev => ({ ...prev, department: e.target.value }))}
-                                            className="staff-input"
-                                            style={{ marginTop: '8px' }}
-                                        >
-                                            <option value="">-- Select Department --</option>
-                                            {hospital.departments.map(dept => (
-                                                <option key={dept} value={dept}>{dept}</option>
-                                            ))}
-                                        </select>
-                                    </div>
-                                </div>
-                            )}
 
                             <button type="submit" disabled={creating} className="submit-button" style={{ marginTop: '20px' }}>
                                 {creating ? 'Creating Account...' : '✅ Create Staff Account'}
@@ -449,25 +431,6 @@ const Admin = () => {
                                     </div>
                                 </div>
 
-                                
-                                {hospital && hospital.departments && hospital.departments.length > 0 && (
-                                    <div className="form-row" style={{ marginTop: '10px' }}>
-                                        <div className="form-group" style={{ gridColumn: '1 / -1' }}>
-                                            <label className="staff-label">Assign Department (Optional - Leave blank to allow all)</label>
-                                            <select
-                                                value={editForm.department}
-                                                onChange={(e) => setEditForm(prev => ({ ...prev, department: e.target.value }))}
-                                                className="staff-input"
-                                                style={{ marginTop: '8px' }}
-                                            >
-                                                <option value="">-- Select Department --</option>
-                                                {hospital.departments.map(dept => (
-                                                    <option key={dept} value={dept}>{dept}</option>
-                                                ))}
-                                            </select>
-                                        </div>
-                                    </div>
-                                )}
 
                                 <div className="modal-buttons" style={{ marginTop: '20px' }}>
                                     <button type="submit" disabled={updating} className="btn-save">

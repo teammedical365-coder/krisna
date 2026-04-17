@@ -418,7 +418,6 @@ const HospitalAdminDashboard = () => {
     const tabs = [
         { id: 'overview', label: '📊 Overview' },
         { id: 'staff', label: '👤 Staff' },
-        { id: 'departments', label: '🏢 Departments' },
         { id: 'facilities', label: '🛏️ Facilities' },
         { id: 'inventory', label: '💊 Inventory' },
         { id: 'labpricing', label: '🧪 Lab Pricing' },
@@ -446,8 +445,8 @@ const HospitalAdminDashboard = () => {
                             {hospitalInfo ? `🏥 ${hospitalInfo.name.toUpperCase()}` : 'HOSPITAL ADMIN'}
                          </span>
                     </div>
-                    <h1 style={{ fontSize: '1.8rem', fontWeight: 850, margin: '8px 0 4px', color: '#1e293b' }}>Hospital Administration Dashboard</h1>
-                    <p style={{ color: '#64748b', fontSize: '0.95rem' }}>Manage staff, departments, and hospital operations</p>
+                    <h1 style={{ fontSize: '1.8rem', fontWeight: 850, margin: '8px 0 4px', color: '#1e293b' }}>IVF Center Administration Dashboard</h1>
+                    <p style={{ color: '#64748b', fontSize: '0.95rem' }}>Manage staff and center operations</p>
                 </div>
 
                 {error && <div className="error-message">⚠️ {error}</div>}
@@ -680,24 +679,6 @@ const HospitalAdminDashboard = () => {
                                         </div>
                                     </div>
                                     
-                                    {hospitalInfo && hospitalInfo.departments && hospitalInfo.departments.length > 0 && (
-                                        <div className="form-row" style={{ marginTop: '10px' }}>
-                                            <div className="form-group" style={{ gridColumn: '1 / -1' }}>
-                                                <label className="staff-label">Assign Department (Optional - Leave blank to allow all)</label>
-                                                <select
-                                                    value={createForm.department}
-                                                    onChange={(e) => setCreateForm(prev => ({ ...prev, department: e.target.value }))}
-                                                    className="staff-input"
-                                                    style={{ marginTop: '8px' }}
-                                                >
-                                                    <option value="">-- Select Department --</option>
-                                                    {hospitalInfo.departments.map(dept => (
-                                                        <option key={dept} value={dept}>{dept}</option>
-                                                    ))}
-                                                </select>
-                                            </div>
-                                        </div>
-                                    )}
 
                                     <button type="submit" disabled={creating} className="submit-button" style={{ marginTop: '20px' }}>
                                         {creating ? 'Creating Account...' : '✅ Create Staff Account'}
@@ -770,76 +751,6 @@ const HospitalAdminDashboard = () => {
                     </div>
                 )}
 
-                {/* ===================== DEPARTMENTS TAB ===================== */}
-                {activeTab === 'departments' && (
-                    <div className="admin-card">
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-                            <div>
-                                <h2>💵 Department Consultation Fees</h2>
-                                <p style={{ color: '#888', fontSize: '14px', margin: '4px 0 0' }}>
-                                    Configure the consultation fee for each department. Receptionists cannot alter these fees during booking.
-                                </p>
-                            </div>
-                            <button
-                                className="btn-save"
-                                style={{ padding: '8px 20px', whiteSpace: 'nowrap' }}
-                                onClick={async () => {
-                                    try {
-                                        setError('');
-                                        await hospitalAPI.updateDepartmentFees({ departmentFees: hospitalInfo.departmentFees });
-                                        setSuccess('All department fees saved!');
-                                        setTimeout(() => setSuccess(''), 3000);
-                                    } catch (err) {
-                                        setError('Error saving fees');
-                                    }
-                                }}
-                            >
-                                Save All Fees
-                            </button>
-                        </div>
-
-                        <div className="users-table">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Department</th>
-                                        <th>Consultation Fee (₹)</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {(hospitalInfo?.departments || []).length === 0 ? (
-                                        <tr><td colSpan="2" style={{ textAlign: 'center', color: '#666' }}>No departments assigned yet. Contact Central Admin.</td></tr>
-                                    ) : (
-                                        hospitalInfo.departments.map(dept => (
-                                            <tr key={dept}>
-                                                <td style={{ fontWeight: '500' }}>{dept}</td>
-                                                <td>
-                                                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                                        <span style={{ color: '#64748b' }}>₹</span>
-                                                        <input
-                                                            type="number"
-                                                            min="0"
-                                                            className="staff-input"
-                                                            style={{ width: '140px', padding: '8px 12px' }}
-                                                            value={hospitalInfo?.departmentFees?.[dept] ?? hospitalInfo?.appointmentFee ?? 500}
-                                                            onChange={(e) => {
-                                                                const newFee = Number(e.target.value);
-                                                                setHospitalInfo(prev => ({
-                                                                    ...prev,
-                                                                    departmentFees: { ...(prev.departmentFees || {}), [dept]: newFee }
-                                                                }));
-                                                            }}
-                                                        />
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        ))
-                                    )}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                )}
 
                 {/* ===================== FACILITIES TAB ===================== */}
                 {activeTab === 'facilities' && (
@@ -1271,24 +1182,6 @@ const HospitalAdminDashboard = () => {
                                     </div>
                                 </div>
 
-                                {hospitalInfo && hospitalInfo.departments && hospitalInfo.departments.length > 0 && (
-                                    <div className="form-row" style={{ marginTop: '10px' }}>
-                                        <div className="form-group" style={{ gridColumn: '1 / -1' }}>
-                                            <label className="staff-label">Assign Department (Optional - Leave blank to allow all)</label>
-                                            <select
-                                                value={editForm.department}
-                                                onChange={(e) => setEditForm(prev => ({ ...prev, department: e.target.value }))}
-                                                className="staff-input"
-                                                style={{ marginTop: '8px' }}
-                                            >
-                                                <option value="">-- Select Department --</option>
-                                                {hospitalInfo.departments.map(dept => (
-                                                    <option key={dept} value={dept}>{dept}</option>
-                                                ))}
-                                            </select>
-                                        </div>
-                                    </div>
-                                )}
 
                                 <div className="modal-buttons" style={{ marginTop: '20px' }}>
                                     <button type="submit" disabled={updating} className="btn-save">{updating ? 'Saving...' : 'Save Changes'}</button>

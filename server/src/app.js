@@ -44,6 +44,9 @@ const isAllowedOrigin = (origin) => {
     if (origin === 'https://medical365.in') return true;       // root domain
     if (origin === 'https://www.medical365.in') return true;   // www
     if (origin.endsWith('.medical365.in')) return true;        // admin.* and all hospital subdomains
+    if (origin === 'https://eventsupply.in') return true;      // eventsupply.in
+    if (origin === 'https://www.eventsupply.in') return true;  // www.eventsupply.in
+    if (origin.endsWith('.eventsupply.in')) return true;       // subdomains of eventsupply.in
     return false;
 };
 

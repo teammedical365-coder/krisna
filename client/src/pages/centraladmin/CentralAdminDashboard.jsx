@@ -544,7 +544,7 @@ const CentralAdminDashboard = () => {
     };
 
     const tabs = [
-        { id: 'hospitals', label: '🏥 Hospitals', desc: 'Manage hospitals' },
+        { id: 'hospitals', label: '🏥 IVF Centers', desc: 'Manage IVF centers' },
         { id: 'simple-clinics', label: '🏪 Simple Clinics', desc: 'Small clinic management' },
         { id: 'staff', label: '👥 All Staff', desc: 'Global staff management' },
         { id: 'revenue-plans', label: '💰 Revenue Plans', desc: 'Set billing models' },
@@ -935,17 +935,17 @@ const CentralAdminDashboard = () => {
                         <div className="admin-card">
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '20px' }}>
                                 <div>
-                                    <h2>🏥 Registered Hospitals</h2>
-                                    <p style={{ color: '#888', fontSize: '13px', margin: '4px 0 0' }}>Click any hospital card to view full analytics</p>
+                                    <h2>🏥 Registered IVF Centers</h2>
+                                    <p style={{ color: '#888', fontSize: '13px', margin: '4px 0 0' }}>Click any IVF center card to view full analytics</p>
                                 </div>
                                 <div style={{ display: 'flex', gap: '10px' }}>
                                     <button className={showHospitalAdminForm ? 'btn-cancel' : 'btn-edit'} style={{ padding: '10px 18px' }}
                                         onClick={() => { setShowHospitalAdminForm(!showHospitalAdminForm); setShowHospitalForm(false); setEditHospital(null); }}>
-                                        {showHospitalAdminForm ? 'Cancel' : '👤 Add Hospital Admin'}
+                                        {showHospitalAdminForm ? 'Cancel' : '👤 Add Center Admin'}
                                     </button>
                                     <button className={showHospitalForm ? 'btn-cancel' : 'btn-save'} style={{ padding: '10px 18px' }}
                                         onClick={() => { setShowHospitalForm(!showHospitalForm); setShowHospitalAdminForm(false); setEditHospital(null); setHospitalForm({ name: '', slug: '', address: '', city: '', state: '', phone: '', email: '', website: '', departments: [], appointmentFee: 500 }); }}>
-                                        {showHospitalForm ? 'Cancel' : '+ Add Hospital'}
+                                        {showHospitalForm ? 'Cancel' : '+ Add IVF Center'}
                                     </button>
                                 </div>
                             </div>
@@ -1002,14 +1002,14 @@ const CentralAdminDashboard = () => {
                             {/* Hospital Add/Edit Form */}
                             {showHospitalForm && (
                                 <div ref={hospitalFormRef} className="ca-form-box" style={{ marginBottom: '24px' }}>
-                                    <h3>{editHospital ? '✏️ Edit Hospital' : '🏥 Add New Hospital'}</h3>
+                                    <h3>{editHospital ? '✏️ Edit IVF Center' : '🏥 Add New IVF Center'}</h3>
                                     {error && <div className="error-message">{error}</div>}
                                     {success && <div className="success-message">{success}</div>}
                                     <form onSubmit={handleSaveHospital} className="user-form">
                                         <div className="form-row">
                                             <div className="form-group">
-                                                <label className="staff-label">Hospital Name *</label>
-                                                <input type="text" className="staff-input" placeholder="e.g. City General Hospital" value={hospitalForm.name} onChange={e => setHospitalForm({ ...hospitalForm, name: e.target.value })} required />
+                                                <label className="staff-label">IVF Center Name *</label>
+                                                <input type="text" className="staff-input" placeholder="e.g. Krisna IVF Center" value={hospitalForm.name} onChange={e => setHospitalForm({ ...hospitalForm, name: e.target.value })} required />
                                             </div>
                                             <div className="form-group">
                                                 <label className="staff-label">Subdomain Prefix *</label>
@@ -1050,30 +1050,7 @@ const CentralAdminDashboard = () => {
                                             <label className="staff-label">Standard Appointment Fee (₹)</label>
                                             <input type="number" className="staff-input" value={hospitalForm.appointmentFee} onChange={e => setHospitalForm({ ...hospitalForm, appointmentFee: Number(e.target.value) })} min="0" />
                                         </div>
-                                        <div className="form-group" style={{ marginBottom: '16px' }}>
-                                            <label className="staff-label">Departments Provided (Linked to Question Library)</label>
-                                            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', marginTop: '5px' }}>
-                                                {availableDepartments.length === 0 ? (
-                                                    <span style={{ fontSize: '13px', color: '#888' }}>No departments found in Global Question Library.</span>
-                                                ) : availableDepartments.map(dept => (
-                                                    <label key={dept} style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '14px', cursor: 'pointer', background: '#f8fafc', padding: '6px 12px', border: '1px solid #e2e8f0', borderRadius: '4px' }}>
-                                                        <input 
-                                                            type="checkbox" 
-                                                            checked={(hospitalForm.departments || []).includes(dept)} 
-                                                            onChange={(e) => {
-                                                                if (e.target.checked) {
-                                                                    setHospitalForm({ ...hospitalForm, departments: [...hospitalForm.departments, dept] });
-                                                                } else {
-                                                                    setHospitalForm({ ...hospitalForm, departments: hospitalForm.departments.filter(d => d !== dept) });
-                                                                }
-                                                            }} 
-                                                        />
-                                                        {dept}
-                                                    </label>
-                                                ))}
-                                            </div>
-                                        </div>
-                                        <button type="submit" disabled={savingHospital} className="submit-button">{savingHospital ? 'Saving...' : editHospital ? '✅ Update Hospital' : '✅ Create Hospital'}</button>
+                                        <button type="submit" disabled={savingHospital} className="submit-button">{savingHospital ? 'Saving...' : editHospital ? '✅ Update IVF Center' : '✅ Create IVF Center'}</button>
                                     </form>
                                 </div>
                             )}
@@ -1108,11 +1085,6 @@ const CentralAdminDashboard = () => {
                                                 {h.phone && <span>📞 {h.phone}</span>}
                                                 {h.email && <span>✉️ {h.email}</span>}
                                                 {h.slug && <a href={`${window.location.protocol}//${h.slug}.${getBaseHost()}`} target="_blank" rel="noreferrer" style={{display: 'inline-block', marginTop: '6px', background: 'var(--brand-pink)', color: 'white', padding: '2px 6px', fontSize: '10px', borderRadius: '4px', textDecoration: 'none'}}>🌐 {h.slug}.{getBaseHost()}</a>}
-                                                {(h.departments && h.departments.length > 0) && (
-                                                    <div style={{ marginTop: '8px', fontSize: '11px', color: '#64748b' }}>
-                                                        <strong>Depts:</strong> {h.departments.join(', ')}
-                                                    </div>
-                                                )}
                                             </div>
                                             <div className="hospital-click-hint">📊 Click to view full analytics →</div>
                                             <div className="hospital-actions" onClick={e => e.stopPropagation()}>
@@ -1167,17 +1139,6 @@ const CentralAdminDashboard = () => {
                                                 {roles.map(role => <option key={role._id} value={role._id}>{role.name}{role.description ? ` — ${role.description}` : ''}</option>)}
                                             </select>
                                         </div>
-                                        {createStaffForm.hospitalId && (
-                                            <div className="form-group">
-                                                <label className="staff-label">Assign Department</label>
-                                                <select value={createStaffForm.department} onChange={e => setCreateStaffForm({ ...createStaffForm, department: e.target.value })} className="staff-input">
-                                                    <option value="">-- No Department --</option>
-                                                    {hospitals.find(h => h._id === createStaffForm.hospitalId)?.departments?.map(dept => (
-                                                        <option key={dept} value={dept}>{dept}</option>
-                                                    ))}
-                                                </select>
-                                            </div>
-                                        )}
                                     </div>
                                     <div className="form-row">
                                         <div className="form-group">
