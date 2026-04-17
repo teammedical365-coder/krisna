@@ -64,7 +64,7 @@ const CentralAdminLogin = () => {
                                 </button>
 
                                 <div className="hospital-brand">
-                                    <img src="logo.png" alt="Medical 365" style={{ height: '40px', objectFit: 'contain' }} />
+                                    <img src="/logo.png" alt="Krisna IVF Centre" style={{ height: '40px', objectFit: 'contain' }} />
                                 </div>
 
                                 <div className="auth-header">
@@ -90,7 +90,7 @@ const CentralAdminLogin = () => {
                                             <input
                                                 type="email"
                                                 name="email"
-                                                placeholder="admin@medical365.com"
+                                                placeholder="admin@krisnaivc.com"
                                                 value={formData.email}
                                                 onChange={handleChange}
                                                 required

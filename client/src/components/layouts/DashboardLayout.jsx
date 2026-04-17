@@ -106,7 +106,7 @@ const DashboardSidebar = ({ isOpen, setOpen }) => {
                 ) : (
                     <>
                         <div className="brand-dot" />
-                        <span>{hospitalName !== 'Medical 365' ? hospitalName : 'Medical 365'}</span>
+                        <span>{hospitalName !== 'Krisna IVF Centre' ? hospitalName : 'Krisna IVF Centre'}</span>
                     </>
                 )}
             </div>

@@ -9,7 +9,7 @@ import './Navbar.css';
 
 /* ---- Brand Logo ---- */
 const BrandLogo = () => (
-  <img src="logo.png" alt="Medical 365" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+  <img src="logo.png" alt="Krisna IVF Centre" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
 );
 
 const Navbar = () => {
@@ -43,14 +43,14 @@ const Navbar = () => {
         <NavLink to="/" className="navbar-brand">
           <div className="navbar-logo-icon">
             {branding.logoUrl ? (
-              <img src={branding.logoUrl} alt={branding.appName || 'Medical 365'} className="navbar-custom-logo" />
+              <img src={branding.logoUrl} alt={branding.appName || 'Krisna IVF Centre'} className="navbar-custom-logo" />
             ) : (
               <BrandLogo />
             )}
           </div>
           {!branding.logoUrl && (
             <div className="navbar-logo-text">
-              <span className="navbar-logo-main">{branding.appName || 'Medical 365'}</span>
+              <span className="navbar-logo-main">{branding.appName || 'Krisna IVF Centre'}</span>
               <span className="navbar-logo-sub">{branding.tagline || 'Healthcare Suite'}</span>
             </div>
           )}
