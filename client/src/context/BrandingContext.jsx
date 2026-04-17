@@ -128,11 +128,20 @@ export const BrandingProvider = ({ children }) => {
     const [branding, setBranding] = useState(() => {
         try {
             const saved = localStorage.getItem('hospitalBranding');
-            return saved ? JSON.parse(saved) : DEFAULT_BRANDING;
+            if (!saved) return DEFAULT_BRANDING;
+            const b = JSON.parse(saved);
+            if (b.appName === 'Medical 365') b.appName = 'Krisna IVF Centre';
+            if (b.tagline === 'Healthcare Suite') b.tagline = 'Advanced Fertility Care';
+            if (b.logoUrl && b.logoUrl.includes('medical365.in')) b.logoUrl = '';
+            if (b.faviconUrl && b.faviconUrl.includes('medical365.in')) b.faviconUrl = '';
+            return b;
         } catch { return DEFAULT_BRANDING; }
     });
 
-    const [hospitalName, setHospitalName] = useState(() => localStorage.getItem('hospitalBrandingName') || 'Krisna IVF Centre');
+    const [hospitalName, setHospitalName] = useState(() => {
+        const saved = localStorage.getItem('hospitalBrandingName');
+        return (saved === 'Medical 365' || !saved) ? 'Krisna IVF Centre' : saved;
+    });
     const [hospitalId, setHospitalId] = useState(() => localStorage.getItem('hospitalBrandingId') || null);
     const [isCustomBranded, setIsCustomBranded] = useState(false);
 
@@ -175,12 +184,18 @@ export const BrandingProvider = ({ children }) => {
         localStorage.removeItem('hospitalBrandingId');
     }, []);
 
-    // Apply saved branding on mount
+    // Apply saved branding on mount (with legacy name migration)
     useEffect(() => {
         const saved = localStorage.getItem('hospitalBranding');
         if (saved) {
             try {
                 const b = JSON.parse(saved);
+                // Migrate stale platform name from old branding
+                if (b.appName === 'Medical 365') b.appName = 'Krisna IVF Centre';
+                if (b.tagline === 'Healthcare Suite') b.tagline = 'Advanced Fertility Care';
+                if (b.logoUrl && b.logoUrl.includes('medical365.in')) b.logoUrl = '';
+                if (b.faviconUrl && b.faviconUrl.includes('medical365.in')) b.faviconUrl = '';
+                localStorage.setItem('hospitalBranding', JSON.stringify(b));
                 applyBrandingToCSS(b);
                 setIsCustomBranded(true);
             } catch { /* ignore */ }
